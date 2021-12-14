@@ -17,7 +17,7 @@ type filterType = "All"|"Active"|"Completed"
 
 export const Todolist = (props: propsType) => {
 
-    const [filterVal, setFilterVal] = useState("All")
+    const [filterVal, setFilterVal] = useState<filterType>("All")
     let isDone = props.task
     if ( filterVal === "Active") {
         isDone = props.task.filter(f =>f.isDone)
