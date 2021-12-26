@@ -2,6 +2,13 @@ import React, {useState, KeyboardEvent, ChangeEvent} from "react";
 // import {filterType} from "./App";
 import s from "./Todolist.module.css"
 import TextField from '@mui/material/TextField';
+import {
+    Button, Checkbox,
+    Fab, IconButton, List, ListItem, ListItemButton, ListItemText,
+    Stack
+} from "@mui/material";
+import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 
 type propsType = {
@@ -28,9 +35,8 @@ export const Todolist = (props: propsType) => {
     }
     if (filterVal === "Completed") {
         isDone = props.task.filter(f => f.isDone)
-
-
     }
+
     const filteredItems = (val: filterType) => {
         setFilterVal(val)
     }
@@ -65,30 +71,50 @@ export const Todolist = (props: propsType) => {
     const onClickRemoveHandler = (id: string) => {
         props.removeItem(id)
     }
+
     return (
         <div className={s.wrapper}>
             <h3 className={s.title}>{props.title}</h3>
-            <div>
-                <TextField id="outlined-basic" label="Outlined" variant="outlined" />
-                <input value={taskTitle} onChange={onChangeHandler} onKeyPress={onKeyPressHandler}/>
-                <button onClick={onClickHandler}>+</button>
-            </div>
-            <ul>
-                {isDone.map(item => {
-                    return (
-                        <li key={item.id}>
-                            <button onClick={() => onClickRemoveHandler(item.id)}>X</button>
-                            <input type="checkbox" checked={item.isDone}/>
-                            <span>{item.title}</span>
+            <Stack spacing={2} direction="row">
+                <TextField size="small" id="outlined-basic" label="Add your new todo" variant="outlined"
+                           value={taskTitle}
+                           onChange={onChangeHandler} onKeyPress={onKeyPressHandler}/>
+                <Fab color="primary" aria-label="add" size="small" onClick={onClickHandler}>
+                    <AddIcon/>
+                </Fab>
+            </Stack>
 
-                        </li>
-                    );
+            <List className={s.list}>
+                {isDone.map(item => {
+                    return <ListItemButton className={s.list_item} key={item.id}>
+                        <ListItem
+                                  secondaryAction={
+                                      <IconButton edge="end" aria-label="delete"
+                                                  onClick={() => onClickRemoveHandler(item.id)}>
+                                          <DeleteIcon/>
+                                      </IconButton>
+                                  }
+                        >
+                            <Checkbox
+                                checked={item.isDone}
+                                inputProps={{'aria-label': 'controlled'}}
+                            />
+                            <ListItemText
+                                primary={item.title}
+                            />
+                        </ListItem>
+                    </ListItemButton>
                 })}
-            </ul>
+
+            </List>
             <div>
-                <button onClick={() => filterHandler("All")}>All</button>
-                <button onClick={() => filterHandler("Active")}>Active</button>
-                <button onClick={() => filterHandler("Completed")}>Completed</button>
+                <Stack spacing={2} direction="row">
+                    <Button variant="outlined" size='small' onClick={() => filterHandler("All")}>All</Button>
+                    <Button color="success" variant="outlined" size='small'
+                            onClick={() => filterHandler("Active")}>Active</Button>
+                    <Button color="secondary" variant="outlined" size='small'
+                            onClick={() => filterHandler("Completed")}>Completed</Button>
+                </Stack>
             </div>
         </div>
     );
