@@ -1,5 +1,8 @@
 import React, {useState, KeyboardEvent, ChangeEvent} from "react";
 // import {filterType} from "./App";
+import s from "./Todolist.module.css"
+import TextField from '@mui/material/TextField';
+
 
 type propsType = {
     title: string
@@ -63,9 +66,10 @@ export const Todolist = (props: propsType) => {
         props.removeItem(id)
     }
     return (
-        <div>
-            <h3>{props.title}</h3>
+        <div className={s.wrapper}>
+            <h3 className={s.title}>{props.title}</h3>
             <div>
+                <TextField id="outlined-basic" label="Outlined" variant="outlined" />
                 <input value={taskTitle} onChange={onChangeHandler} onKeyPress={onKeyPressHandler}/>
                 <button onClick={onClickHandler}>+</button>
             </div>

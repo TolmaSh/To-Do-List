@@ -1,8 +1,11 @@
 .App {
   padding: 30px;
   display: flex;
+  justify-content: center;
+  height: 100vh;
+  background: linear-gradient(to bottom, #5fcdd4, #539fde);
 }
 
 .App > div {
-  margin-right: 50px;
+  background: #fff;
 }

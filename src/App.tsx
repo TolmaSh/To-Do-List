@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './App.css';
-import {Todolist} from "./Todolist";
+import {Todolist} from "./Todolist/Todolist";
 import {v1} from "uuid";
 // export type filterType = "All"|"Active"|"Completed"
 function App() {
