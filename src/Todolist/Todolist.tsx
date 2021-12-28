@@ -1,9 +1,9 @@
-import React, {useState, KeyboardEvent, ChangeEvent} from "react";
-// import {filterType} from "./App";
+import React, {useState, KeyboardEvent, MouseEvent, ChangeEvent} from "react";
 import s from "./Todolist.module.css"
 import TextField from '@mui/material/TextField';
 import {
     Alert,
+    Box,
     Button, Checkbox,
     Fab, IconButton, List, ListItem, ListItemButton, ListItemText,
     Stack
@@ -18,7 +18,7 @@ type propsType = {
     removeItem: (id: string) => void
     addTask: (newTitle: string) => void
     changeTaskStatus: (id: string, value: boolean) => void
-    errorName:boolean
+    errorName: boolean
 }
 
 type arrType = {
@@ -29,7 +29,7 @@ type arrType = {
 
 type filterType = "All" | "Active" | "Completed"
 
-export const Todolist = ({title, task, removeItem, addTask, changeTaskStatus,errorName, ...props}: propsType) => {
+export const Todolist = ({title, task, removeItem, addTask, changeTaskStatus, errorName, ...props}: propsType) => {
 
     const [filterVal, setFilterVal] = useState<filterType>("All")
     let isDone = task
@@ -62,31 +62,29 @@ export const Todolist = ({title, task, removeItem, addTask, changeTaskStatus,err
     const filterHandler = (value: filterType) => {
         filteredItems(value)
     }
-    const onClickRemoveHandler = (id: string, value: any) => {
+    const onClickRemoveHandler = (id: string, value: MouseEvent<HTMLButtonElement>) => {
         value.stopPropagation()
         removeItem(id)
     }
     return (
         <div className={s.wrapper}>
             <h3 className={s.title}>{title}</h3>
-            <Stack className={s.inputWrapper} spacing={2} direction="row">
-                {!errorName ?
-                    <TextField
-                           className={s.inputName} size="small" id="outlined-basic" label="Add your new todo"
-                           variant="outlined"
-                           value={taskTitle}
-                           onChange={onChangeHandler} onKeyPress={onKeyPressHandler}/>
-                : <TextField
-                        error
-                        className={s.inputName} size="small" id="outlined-basic" label="Add your new todo"
-                        variant="outlined"
-                        value={taskTitle}
-                        onChange={onChangeHandler} onKeyPress={onKeyPressHandler}/>
-                }
+            <Box
+                component="form"
+                noValidate
+                autoComplete="off"
+                className={s.inputWrapper}
+            >
+                <TextField
+                    error={errorName}
+                    className={s.inputName} size="small" id="outlined-basic" label="Add your new todo"
+                    variant="outlined"
+                    value={taskTitle}
+                    onChange={onChangeHandler} onKeyPress={onKeyPressHandler}/>
                 <Fab color="primary" aria-label="add" size="small" onClick={onClickHandler}>
                     <AddIcon/>
                 </Fab>
-            </Stack>
+            </Box>
             {errorName && <Alert className={s.alert} severity="error">Write a correct name todo</Alert>}
             <List className={s.list}>
                 {isDone.map(item => {
