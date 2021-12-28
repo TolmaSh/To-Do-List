@@ -3,6 +3,7 @@ import React, {useState, KeyboardEvent, ChangeEvent} from "react";
 import s from "./Todolist.module.css"
 import TextField from '@mui/material/TextField';
 import {
+    Alert,
     Button, Checkbox,
     Fab, IconButton, List, ListItem, ListItemButton, ListItemText,
     Stack
@@ -16,6 +17,8 @@ type propsType = {
     task: Array<arrType>
     removeItem: (id: string) => void
     addTask: (newTitle: string) => void
+    changeTaskStatus: (id: string, value: boolean) => void
+    errorName:boolean
 }
 
 type arrType = {
@@ -26,15 +29,15 @@ type arrType = {
 
 type filterType = "All" | "Active" | "Completed"
 
-export const Todolist = (props: propsType) => {
+export const Todolist = ({title, task, removeItem, addTask, changeTaskStatus,errorName, ...props}: propsType) => {
 
     const [filterVal, setFilterVal] = useState<filterType>("All")
-    let isDone = props.task
+    let isDone = task
     if (filterVal === "Active") {
-        isDone = props.task.filter(f => !f.isDone)
+        isDone = task.filter(f => !f.isDone)
     }
     if (filterVal === "Completed") {
-        isDone = props.task.filter(f => f.isDone)
+        isDone = task.filter(f => f.isDone)
     }
 
     const filteredItems = (val: filterType) => {
@@ -47,7 +50,7 @@ export const Todolist = (props: propsType) => {
         setTaskTitle(event.currentTarget.value);
     }
     const onClickHandler = () => {
-        props.addTask(taskTitle)
+        addTask(taskTitle)
         setTaskTitle('')
     }
     const onKeyPressHandler = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -56,44 +59,47 @@ export const Todolist = (props: propsType) => {
         }
     }
 
-    // const filteredAllHandler = () => {
-    //     filteredItems("All")
-    // }
-    // const filteredActiveHandler = () => {
-    //     filteredItems("Active")
-    // }
-    // const filteredCompletedHandler = () => {
-    //     filteredItems(value)
-    // }
     const filterHandler = (value: filterType) => {
         filteredItems(value)
     }
-    const onClickRemoveHandler = (id: string) => {
-        props.removeItem(id)
+    const onClickRemoveHandler = (id: string, value: any) => {
+        value.stopPropagation()
+        removeItem(id)
     }
-
     return (
         <div className={s.wrapper}>
-            <h3 className={s.title}>{props.title}</h3>
-            <Stack spacing={2} direction="row">
-                <TextField size="small" id="outlined-basic" label="Add your new todo" variant="outlined"
+            <h3 className={s.title}>{title}</h3>
+            <Stack className={s.inputWrapper} spacing={2} direction="row">
+                {!errorName ?
+                    <TextField
+                           className={s.inputName} size="small" id="outlined-basic" label="Add your new todo"
+                           variant="outlined"
                            value={taskTitle}
                            onChange={onChangeHandler} onKeyPress={onKeyPressHandler}/>
+                : <TextField
+                        error
+                        className={s.inputName} size="small" id="outlined-basic" label="Add your new todo"
+                        variant="outlined"
+                        value={taskTitle}
+                        onChange={onChangeHandler} onKeyPress={onKeyPressHandler}/>
+                }
                 <Fab color="primary" aria-label="add" size="small" onClick={onClickHandler}>
                     <AddIcon/>
                 </Fab>
             </Stack>
-
+            {errorName && <Alert className={s.alert} severity="error">Write a correct name todo</Alert>}
             <List className={s.list}>
                 {isDone.map(item => {
-                    return <ListItemButton className={s.list_item} key={item.id}>
+                    return <ListItemButton className={s.list_item} key={item.id}
+                    >
                         <ListItem
-                                  secondaryAction={
-                                      <IconButton edge="end" aria-label="delete"
-                                                  onClick={() => onClickRemoveHandler(item.id)}>
-                                          <DeleteIcon/>
-                                      </IconButton>
-                                  }
+                            onClick={() => changeTaskStatus(item.id, !item.isDone)}
+                            secondaryAction={
+                                <IconButton edge="end" aria-label="delete"
+                                            onClick={(event) => onClickRemoveHandler(item.id, event)}>
+                                    <DeleteIcon/>
+                                </IconButton>
+                            }
                         >
                             <Checkbox
                                 checked={item.isDone}
@@ -105,14 +111,15 @@ export const Todolist = (props: propsType) => {
                         </ListItem>
                     </ListItemButton>
                 })}
-
             </List>
             <div>
-                <Stack spacing={2} direction="row">
-                    <Button variant="outlined" size='small' onClick={() => filterHandler("All")}>All</Button>
-                    <Button color="success" variant="outlined" size='small'
+                <Stack className={s.buttons} spacing={2} direction="row">
+                    <Button variant={filterVal === 'All' ? "contained" : "outlined"} size='small'
+                            onClick={() => filterHandler("All")}>All</Button>
+                    <Button color="success" variant={filterVal === 'Active' ? "contained" : "outlined"} size='small'
                             onClick={() => filterHandler("Active")}>Active</Button>
-                    <Button color="secondary" variant="outlined" size='small'
+                    <Button color="secondary" variant={filterVal === 'Completed' ? "contained" : "outlined"}
+                            size='small'
                             onClick={() => filterHandler("Completed")}>Completed</Button>
                 </Stack>
             </div>

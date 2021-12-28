@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import './App.css';
 import {Todolist} from "./Todolist/Todolist";
 import {v1} from "uuid";
-// export type filterType = "All"|"Active"|"Completed"
 function App() {
     const [tasks,setTasks] = useState([
         {id:v1(),title:"HTML&CSS",isDone:true},
@@ -11,27 +10,25 @@ function App() {
         {id:v1(),title:"Redux",isDone:false},
         {id:v1(),title:"JSON",isDone:true}
     ])
+    const [error,setError] = useState(false)
+    const changeTaskStatus = (id: string, value: boolean) => {
+        setTasks(tasks.map(m => m.id === id ? {...m, isDone: value} : m))
+    }
     const removeItem = (id: string) => {
         setTasks(tasks.filter(f => f.id !== id))
     }
 
     const addTask = (newTitle: string) => {
         const newTask = {id:v1(),title:newTitle,isDone:true}
-        setTasks([newTask, ...tasks])
+        if ( newTitle === "") {
+            setError(true)
+        } else {
+            setError(false)
+            setTasks([newTask, ...tasks])
+        }
     }
-    // const [filterVal, setFilterVal] = useState("All")
-    // let isDone = tasks
-    // if ( filterVal === "Active") {
-    //         isDone = tasks.filter(f =>f.isDone)
-    //     }
-    // if ( filterVal === "Completed") {
-    //         isDone = tasks.filter(f=>!f.isDone)
-    //
-    //
-    //     }
-    // const filteredItems = (val: filterType) => {
-    //     setFilterVal(val)
-    // }
+
+
 
     return (
         <div className="App">
@@ -40,6 +37,8 @@ function App() {
                 task={tasks}
                 removeItem={removeItem}
                 addTask={addTask}
+                changeTaskStatus={changeTaskStatus}
+                errorName={error}
             />
 
         </div>
