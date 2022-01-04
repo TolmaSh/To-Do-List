@@ -14,6 +14,7 @@ type propsType = {
     errorName: boolean
 }
 
+
 export type arrType = {
     id: string,
     title: string,

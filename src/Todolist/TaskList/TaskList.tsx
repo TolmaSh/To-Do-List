@@ -11,7 +11,7 @@ type propsType = {
     onClickRemoveHandler: (id: string, value: MouseEvent<HTMLButtonElement>) => void
 }
 
-export const TaskList = ({tasksForTodolist,changeTaskStatus,onClickRemoveHandler} : propsType) => {
+export const TaskList = ({tasksForTodolist, changeTaskStatus, onClickRemoveHandler}: propsType) => {
     return (
         <List className={s.list}>
             {tasksForTodolist.map(item => {
