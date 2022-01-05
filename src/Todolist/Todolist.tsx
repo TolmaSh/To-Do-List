@@ -1,17 +1,21 @@
-import React, {useState, KeyboardEvent, MouseEvent, ChangeEvent} from "react";
+import React, {useState, KeyboardEvent, MouseEvent, ChangeEvent, SetStateAction, Dispatch} from "react";
 import s from "./Todolist.module.css"
 import {FilterBtns} from "./FilterBtns/FilterBtns";
 import {TaskList} from "./TaskList/TaskList";
 import {AddTask} from "./AddTask/AddTask";
+import {TodoListType} from "../App";
 
 
 type propsType = {
+    todolistID: string
     title: string
     task: Array<arrType>
-    removeItem: (id: string) => void
-    addTask: (newTitle: string) => void
-    changeTaskStatus: (id: string, value: boolean) => void
+    removeItem: (todolistID: string,id: string) => void
+    addTask: (todolistID: string,newTitle: string) => void
+    changeTaskStatus: (todolistID: string,id: string, value: boolean) => void
+    filteredItems: (todolistID: string,val: filterType) => void
     errorName: boolean
+    filter: filterType
 }
 
 
@@ -23,9 +27,9 @@ export type arrType = {
 
 export type filterType = "All" | "Active" | "Completed"
 
-export const Todolist = ({title, task, removeItem, addTask, changeTaskStatus, errorName, ...props}: propsType) => {
+export const Todolist = ({title, task, removeItem, addTask, changeTaskStatus, errorName,filter,todolistID,filteredItems, ...props}: propsType) => {
     const [taskTitle, setTaskTitle] = useState('')
-    const [filterVal, setFilterVal] = useState<filterType>("All")
+    // const [filterVal, setFilterVal] = useState<filterType>("All")
 
 
     // --- AddTask ---
@@ -34,7 +38,7 @@ export const Todolist = ({title, task, removeItem, addTask, changeTaskStatus, er
         setTaskTitle(event.currentTarget.value);
     }
     const onClickHandler = () => {
-        addTask(taskTitle)
+        addTask(todolistID,taskTitle)
         setTaskTitle('')
     }
     const onKeyPressHandler = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -47,11 +51,8 @@ export const Todolist = ({title, task, removeItem, addTask, changeTaskStatus, er
 
     //------ FilterBtns -----
 
-    const filteredItems = (val: filterType) => {
-        setFilterVal(val)
-    }
     const filterHandler = (value: filterType) => {
-        filteredItems(value)
+        filteredItems(todolistID ,value)
     }
 
     //---  ----
@@ -59,16 +60,16 @@ export const Todolist = ({title, task, removeItem, addTask, changeTaskStatus, er
     // ----- TaskList ----
 
     let tasksForTodolist = task
-    if (filterVal === "Active") {
+    if (filter === "Active") {
         tasksForTodolist = task.filter(f => !f.isDone)
     }
-    if (filterVal === "Completed") {
+    if (filter === "Completed") {
         tasksForTodolist = task.filter(f => f.isDone)
     }
 
     const onClickRemoveHandler = (id: string, value: MouseEvent<HTMLButtonElement>) => {
         value.stopPropagation()
-        removeItem(id)
+        removeItem(todolistID,id)
     }
 
     // ----    -----
@@ -85,11 +86,12 @@ export const Todolist = ({title, task, removeItem, addTask, changeTaskStatus, er
                 onClickHandler={onClickHandler}
             />
             <TaskList
+                todolistID={todolistID}
                 tasksForTodolist={tasksForTodolist}
                 changeTaskStatus={changeTaskStatus}
                 onClickRemoveHandler={onClickRemoveHandler}
             />
-            <FilterBtns filterVal={filterVal}
+            <FilterBtns filterVal={filter}
                         filterHandler={filterHandler}
             />
         </div>
