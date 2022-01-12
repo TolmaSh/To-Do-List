@@ -2,7 +2,7 @@ import React, {MouseEvent,} from "react";
 import s from "./Todolist.module.css"
 import {FilterBtns} from "./FilterBtns/FilterBtns";
 import {TaskList} from "./TaskList/TaskList";
-import {AddItemForm} from "./AddTask/AddItemForm";
+import {AddItemForm} from "./AddItemForm/AddItemForm";
 import IconButton from "@mui/material/IconButton";
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 
