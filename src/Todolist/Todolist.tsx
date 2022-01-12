@@ -1,9 +1,8 @@
-import React, {useState, KeyboardEvent, MouseEvent, ChangeEvent, SetStateAction, Dispatch} from "react";
+import React, {MouseEvent,} from "react";
 import s from "./Todolist.module.css"
 import {FilterBtns} from "./FilterBtns/FilterBtns";
 import {TaskList} from "./TaskList/TaskList";
-import {AddTask} from "./AddTask/AddTask";
-import {TodoListType} from "../App";
+import {AddItemForm} from "./AddTask/AddItemForm";
 import IconButton from "@mui/material/IconButton";
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 
@@ -17,7 +16,6 @@ type propsType = {
     addTask: (todolistID: string, newTitle: string) => void
     changeTaskStatus: (todolistID: string, id: string, value: boolean) => void
     filteredItems: (todolistID: string, val: filterType) => void
-    errorName: boolean
     filter: filterType
 }
 
@@ -36,30 +34,19 @@ export const Todolist = ({
                              removeItem,
                              addTask,
                              changeTaskStatus,
-                             errorName,
                              filter,
                              todolistID,
                              filteredItems,
                              ...props
                          }: propsType) => {
-    const [taskTitle, setTaskTitle] = useState('')
-    // const [filterVal, setFilterVal] = useState<filterType>("All")
+
+    // --- AddItemForm ---
 
 
-    // --- AddTask ---
+    const addTaskCallBack = (title: string) => {
+        addTask(todolistID, title)
+    }
 
-    const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => { /// error меняется  при change
-        setTaskTitle(event.currentTarget.value);
-    }
-    const onClickHandler = () => {
-        addTask(todolistID, taskTitle)
-        setTaskTitle('')
-    }
-    const onKeyPressHandler = (event: KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === "Enter") {
-            onClickHandler()
-        }
-    }
 
     /// --- ---
 
@@ -99,12 +86,8 @@ export const Todolist = ({
                     <RemoveCircleOutlineIcon/>
                 </IconButton>
             </h3>
-            <AddTask
-                errorName={errorName}
-                taskTitle={taskTitle}
-                onChangeHandler={onChangeHandler}
-                onKeyPressHandler={onKeyPressHandler}
-                onClickHandler={onClickHandler}
+            <AddItemForm
+                callBack={(title) => addTaskCallBack(title)}
             />
             <TaskList
                 todolistID={todolistID}

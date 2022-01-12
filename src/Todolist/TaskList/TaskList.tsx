@@ -12,14 +12,14 @@ type propsType = {
     onClickRemoveHandler: (id: string, value: MouseEvent<HTMLButtonElement>) => void
 }
 
-export const TaskList = ({tasksForTodolist, changeTaskStatus, onClickRemoveHandler,todolistID}: propsType) => {
+export const TaskList = ({tasksForTodolist, changeTaskStatus, onClickRemoveHandler, todolistID}: propsType) => {
     return (
         <List className={s.list}>
             {tasksForTodolist.map(item => {
                 return <ListItemButton className={s.list_item} key={item.id}
                 >
                     <ListItem
-                        onClick={() => changeTaskStatus(todolistID,item.id, !item.isDone)}
+                        onClick={() => changeTaskStatus(todolistID, item.id, !item.isDone)}
                         secondaryAction={
                             <IconButton edge="end" aria-label="delete"
                                         onClick={(event) => onClickRemoveHandler(item.id, event)}>

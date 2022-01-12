@@ -8,7 +8,6 @@ export type TodoListType = {
     id: string
     title: string
     filter: filterType
-    error: boolean
 }
 
 function App() {
@@ -17,8 +16,8 @@ function App() {
     const todolistID_2 = v1()
 
     const [todolists, setTodolists] = useState<Array<TodoListType>>([
-        {id: todolistID_1, title: 'What to learn', filter: "All", error: false},
-        {id: todolistID_2, title: 'What to buy', filter: "Active", error: false}
+        {id: todolistID_1, title: 'What to learn', filter: "All"},
+        {id: todolistID_2, title: 'What to buy', filter: "Active"}
     ])
 
     const [tasks, setTasks] = useState({
@@ -37,10 +36,8 @@ function App() {
             {id: v1(), title: "Water", isDone: false}
         ]
     })
-    // const [error, setError] = useState(false)
     const changeTaskStatus = (todolistID: string, id: string, value: boolean) => {
         setTasks({...tasks, [todolistID]: tasks[todolistID].map(m => m.id === id ? {...m, isDone: value} : m)})
-        // setTasks(tasks.map(m => m.id === id ? {...m, isDone: value} : m))
 
     }
 
@@ -82,7 +79,6 @@ function App() {
                         addTask={addTask}
                         changeTaskStatus={changeTaskStatus}
                         filteredItems={filteredItems}
-                        errorName={t.error}
                         filter={t.filter}
                     />
                 )
