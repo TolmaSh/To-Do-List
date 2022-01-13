@@ -1,7 +1,9 @@
 .wrapper {
     width: 350px;
+    border-radius: 15px;
     height: max-content;
     padding: 0 35px 35px 35px;
+    background-color: #fff;
 }
 .list {
 
@@ -27,5 +29,5 @@
     width: 70%;
 }
 .edit_input {
-    width: 70%;
+    width: 100%;
 }

@@ -6,9 +6,10 @@ import AddIcon from "@mui/icons-material/Add";
 
 type propsType = {
     callBack: (title: string) => void
+    label?: string
 }
 
-export const AddItemForm = ({callBack}: propsType) => {
+export const AddItemForm = ({callBack,label}: propsType) => {
     const [title, setTitle] = useState('')
     const [error, setError] = useState(false)
 
@@ -29,7 +30,7 @@ export const AddItemForm = ({callBack}: propsType) => {
             setTitle('')
         }
     }
-
+    const finallyLabel = label ? `${label}` : "Add your new todo"
     return (
         <>
             <Box
@@ -42,7 +43,7 @@ export const AddItemForm = ({callBack}: propsType) => {
             >
                 <TextField
                     error={error}
-                    className={s.inputName} size="small" id="outlined-basic" label="Add your new todo"
+                    className={s.inputName} size="small" id="outlined-basic" label={finallyLabel}
                     variant="outlined"
                     value={title}
                     onChange={onChangeHandler} onKeyPress={onKeyPressHandler}
@@ -52,7 +53,7 @@ export const AddItemForm = ({callBack}: propsType) => {
                     <AddIcon/>
                 </Fab>
             </Box>
-            {error && <Alert className={s.alert} severity="error">Write a correct name todo</Alert>}
+            {error && <Alert className={s.alert} severity="error">Write a correct name</Alert>}
         </>
     );
 };

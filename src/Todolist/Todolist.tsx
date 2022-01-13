@@ -4,7 +4,7 @@ import {FilterBtns} from "./FilterBtns/FilterBtns";
 import {TaskList} from "./TaskList/TaskList";
 import {AddItemForm} from "./AddItemForm/AddItemForm";
 import IconButton from "@mui/material/IconButton";
-import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
 
 type propsType = {
@@ -15,6 +15,7 @@ type propsType = {
     deleteTodo: (todolistID: string) => void
     addTask: (todolistID: string, newTitle: string) => void
     changeTaskStatus: (todolistID: string, id: string, value: boolean) => void
+    updateTask: (todolistID: string, id: string, value: string) => void
     filteredItems: (todolistID: string, val: filterType) => void
     filter: filterType
 }
@@ -34,6 +35,7 @@ export const Todolist = ({
                              removeItem,
                              addTask,
                              changeTaskStatus,
+                             updateTask,
                              filter,
                              todolistID,
                              filteredItems,
@@ -83,7 +85,7 @@ export const Todolist = ({
         <div className={s.wrapper}>
             <h3 className={s.title}>{title}
                 <IconButton aria-label="delete" onClick={onClickDeleteTodoHandler}>
-                    <RemoveCircleOutlineIcon/>
+                    <HighlightOffIcon/>
                 </IconButton>
             </h3>
             <AddItemForm
@@ -93,6 +95,7 @@ export const Todolist = ({
                 todolistID={todolistID}
                 tasksForTodolist={tasksForTodolist}
                 changeTaskStatus={changeTaskStatus}
+                updateTask={updateTask}
                 onClickRemoveHandler={onClickRemoveHandler}
             />
             <FilterBtns filterVal={filter}
