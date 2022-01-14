@@ -12,9 +12,9 @@ type propsType = {
 export const EditableTask: React.FC<propsType> = ({title, updateTaskCallback}) => {
     const [edit, setEdit] = useState(false)
     const [newTitle, setNewTitle] = useState(title)
-    const onDoubleClickHandler = () => {
+    const onDoubleClickHandler = (e: React.MouseEvent<HTMLElement>) => {
+        e.stopPropagation()
         setEdit(true)
-
     }
     const onBlurHandler = () => {
         updateTaskCallback(newTitle)
@@ -39,9 +39,9 @@ export const EditableTask: React.FC<propsType> = ({title, updateTaskCallback}) =
                     primary={newTitle}
                 />}
             <IconButton edge="end" aria-label="edit"
-                        onClick={(e) => e.stopPropagation()}
+                        onClick={onDoubleClickHandler}
                         >
-                <EditIcon onClick={onDoubleClickHandler}/>
+                <EditIcon />
             </IconButton>
         </>
     );

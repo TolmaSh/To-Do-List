@@ -51,7 +51,7 @@ export const TaskList = ({
                             />
                             <EditableTask
                                 updateTaskCallback={(title) => onClickUpdateTask(item.id, title)}
-                                title={item.title}
+                                title={item.taskTitle}
                             />
                         </ListItem>
                     </ListItemButton>

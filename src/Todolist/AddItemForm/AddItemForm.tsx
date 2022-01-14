@@ -9,7 +9,7 @@ type propsType = {
     label?: string
 }
 
-export const AddItemForm = ({callBack,label}: propsType) => {
+export const AddItemForm = ({callBack, label}: propsType) => {
     const [title, setTitle] = useState('')
     const [error, setError] = useState(false)
 
@@ -30,7 +30,7 @@ export const AddItemForm = ({callBack,label}: propsType) => {
             setTitle('')
         }
     }
-    const finallyLabel = label ? `${label}` : "Add your new todo"
+    const finallyLabel: string = label ? `${label}` : "Add your new todo"
     return (
         <>
             <Box
