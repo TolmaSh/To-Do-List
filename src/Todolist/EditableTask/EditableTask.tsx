@@ -6,13 +6,14 @@ import EditIcon from "@mui/icons-material/Edit";
 
 type propsType = {
     title: string
-    updateTaskCallback: ( value: string) => void
+    updateTaskCallback: (value: string) => void
 }
 
 export const EditableTask: React.FC<propsType> = ({title, updateTaskCallback}) => {
     const [edit, setEdit] = useState(false)
     const [newTitle, setNewTitle] = useState(title)
-    const onDoubleClickHandler = (e: React.MouseEvent<HTMLElement>) => {
+
+    const activateEditMode = (e: React.MouseEvent<HTMLElement>) => {
         e.stopPropagation()
         setEdit(true)
     }
@@ -24,6 +25,7 @@ export const EditableTask: React.FC<propsType> = ({title, updateTaskCallback}) =
     const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         setNewTitle(event.currentTarget.value)
     }
+
     return (
         <>
             {edit
@@ -35,13 +37,12 @@ export const EditableTask: React.FC<propsType> = ({title, updateTaskCallback}) =
                          className={s.edit_input}
                 />
                 : <ListItemText
-                    // onDoubleClick={onDoubleClickHandler}
                     primary={newTitle}
                 />}
             <IconButton edge="end" aria-label="edit"
-                        onClick={onDoubleClickHandler}
-                        >
-                <EditIcon />
+                        onClick={activateEditMode}
+            >
+                <EditIcon/>
             </IconButton>
         </>
     );
