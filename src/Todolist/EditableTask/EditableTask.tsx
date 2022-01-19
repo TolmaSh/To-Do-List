@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {IconButton, Input, ListItemText} from "@mui/material";
 import s from "../Todolist.module.css";
 import EditIcon from "@mui/icons-material/Edit";
@@ -22,6 +22,11 @@ export const EditableTask: React.FC<propsType> = ({title, updateTaskCallback}) =
         setEdit(false)
 
     }
+    const onKeyPressHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === "Enter") {
+            onBlurHandler()
+        }
+    }
     const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         setNewTitle(event.currentTarget.value)
     }
@@ -34,6 +39,7 @@ export const EditableTask: React.FC<propsType> = ({title, updateTaskCallback}) =
                          onBlur={onBlurHandler}
                          onClick={(e) => e.stopPropagation()}
                          onChange={onChangeHandler}
+                         onKeyPress={onKeyPressHandler}
                          className={s.edit_input}
                 />
                 : <ListItemText

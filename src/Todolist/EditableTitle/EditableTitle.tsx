@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import s from "../Todolist.module.css";
 import IconButton from "@mui/material/IconButton";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
@@ -20,6 +20,11 @@ export const EditableTitle: React.FC<propsType> = ({title, deleteTaskCallBack, u
         setEdit(false)
 
     }
+    const onKeyPressHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === "Enter") {
+            onBlurHandler()
+        }
+    }
     const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         setNewTitle(event.currentTarget.value)
     }
@@ -34,6 +39,7 @@ export const EditableTitle: React.FC<propsType> = ({title, deleteTaskCallBack, u
                     ?  <Input autoFocus
                               defaultValue={newTitle}
                               onBlur={onBlurHandler}
+                              onKeyPress={onKeyPressHandler}
                               onClick={(e) => e.stopPropagation()}
                               onChange={onChangeHandler}
 
