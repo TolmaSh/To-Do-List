@@ -27,7 +27,7 @@ export const TaskList = ({
 
     return (
         <List className={s.list}>
-            {tasksForTodolist.map(item => {
+            {tasksForTodolist?.map(item => {
                 return (
                     <ListItemButton className={s.list_item} key={item.id}
                     >
