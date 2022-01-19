@@ -38,7 +38,7 @@ export const EditableTitle: React.FC<propsType> = ({title, deleteTaskCallBack, u
                               onChange={onChangeHandler}
 
                     />
-                        : {title}
+                        : <span>{title}</span>
             }
 
                         <IconButton aria-label="edit" onClick={onClickHandler}>

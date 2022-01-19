@@ -2,13 +2,13 @@ import React, {MouseEvent} from 'react';
 import {Checkbox, IconButton, List, ListItem, ListItemButton} from "@mui/material";
 import s from "../Todolist.module.css";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {arrType} from "../Todolist";
+import {taskType} from "../Todolist";
 import {EditableTask} from "../EditableTask/EditableTask";
 
 
 type propsType = {
     todolistID: string
-    tasksForTodolist: Array<arrType>
+    tasksForTodolist: Array<taskType>
     changeTaskStatus: (todolistID: string, id: string, value: boolean) => void
     updateTask: (todolistID: string, id: string, value: string) => void
     onClickRemoveHandler: (id: string, value: MouseEvent<HTMLButtonElement>) => void

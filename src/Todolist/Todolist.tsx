@@ -9,7 +9,7 @@ import {EditableTitle} from "./EditableTitle/EditableTitle";
 type propsType = {
     todolistID: string
     title: string
-    task: Array<arrType>
+    task: Array<taskType>
     removeItem: (todolistID: string, id: string) => void
     deleteTodo: (todolistID: string) => void
     addTask: (todolistID: string, newTitle: string) => void
@@ -19,7 +19,7 @@ type propsType = {
     filteredItems: (todolistID: string, val: filterType) => void
     filter: filterType
 }
-export type arrType = {
+export type taskType = {
     id: string,
     taskTitle: string,
     isDone: boolean
