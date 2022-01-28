@@ -1,5 +1,5 @@
 import {v1} from "uuid";
-import {taskType} from "../Todolist/Todolist";
+import {taskType} from "../App";
 
 type TasksStateType = {
     [key: string]: taskType[]
