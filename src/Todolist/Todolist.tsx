@@ -1,16 +1,17 @@
-import React, {MouseEvent} from "react";
+import React from "react";
 import s from "./Todolist.module.css";
 import {FilterBtns} from "./FilterBtns/FilterBtns";
 import {TaskList} from "./TaskList/TaskList";
 import {AddItemForm} from "./AddItemForm/AddItemForm";
 import {EditableTitle} from "./EditableTitle/EditableTitle";
+import {filterType, taskType} from "../App";
 
 
 type propsType = {
     todolistID: string
     title: string
     task: Array<taskType>
-    removeItem: (todolistID: string, id: string) => void
+    deleteTask: (todolistID: string, id: string) => void
     deleteTodo: (todolistID: string) => void
     addTask: (todolistID: string, newTitle: string) => void
     changeTaskStatus: (todolistID: string, id: string, value: boolean) => void
@@ -19,18 +20,11 @@ type propsType = {
     filteredItems: (todolistID: string, val: filterType) => void
     filter: filterType
 }
-export type taskType = {
-    id: string,
-    taskTitle: string,
-    isDone: boolean
-}
-
-export type filterType = "All" | "Active" | "Completed"
 
 export const Todolist = ({
                              title,
                              task,
-                             removeItem,
+                             deleteTask,
                              addTask,
                              changeTaskStatus,
                              updateTask,
@@ -64,9 +58,8 @@ export const Todolist = ({
             tasksForTodolist = task
     }
 
-    const onClickRemoveHandler = (id: string, value: MouseEvent<HTMLButtonElement>) => {
-        value.stopPropagation()
-        removeItem(todolistID, id)
+    const onClickRemoveHandler = (id: string) => {
+        deleteTask(todolistID, id)
     }
     const onClickDeleteTodoHandler = () => {
         props.deleteTodo(todolistID)

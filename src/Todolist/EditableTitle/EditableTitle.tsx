@@ -9,7 +9,7 @@ import EditIcon from "@mui/icons-material/Edit";
 type propsType = {
     title: string
     deleteTaskCallBack: () => void
-    updateTitleCallback: (title:string) => void
+    updateTitleCallback: (title: string) => void
 }
 export const EditableTitle: React.FC<propsType> = ({title, deleteTaskCallBack, updateTitleCallback}) => {
     const [edit, setEdit] = useState(false)
@@ -36,23 +36,22 @@ export const EditableTitle: React.FC<propsType> = ({title, deleteTaskCallBack, u
         <h3 className={s.title}>
             {
                 edit
-                    ?  <Input autoFocus
-                              defaultValue={newTitle}
-                              onBlur={onBlurHandler}
-                              onKeyPress={onKeyPressHandler}
-                              onClick={(e) => e.stopPropagation()}
-                              onChange={onChangeHandler}
+                    ? <Input autoFocus
+                             defaultValue={newTitle}
+                             onBlur={onBlurHandler}
+                             onKeyPress={onKeyPressHandler}
+                             onClick={(e) => e.stopPropagation()}
+                             onChange={onChangeHandler}
 
                     />
-                        : <>{title}</>
+                    : <>{title}</>
             }
-                        <IconButton aria-label="edit" onClick={onClickHandler}>
-                            <EditIcon />
-                        </IconButton>
-                         <IconButton aria-label="delete" onClick={deleteTaskCallBack}>
-                            <HighlightOffIcon/>
-                        </IconButton>
-
-                    </h3>
-                );
-            };
+            <IconButton edge="end" aria-label="edit" onClick={onClickHandler}>
+                <EditIcon/>
+            </IconButton>
+            <IconButton edge="end" aria-label="delete" onClick={deleteTaskCallBack}>
+                <HighlightOffIcon/>
+            </IconButton>
+        </h3>
+    );
+};

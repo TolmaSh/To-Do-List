@@ -1,9 +1,8 @@
-import React, {MouseEvent} from 'react';
-import {Checkbox, IconButton, List, ListItem, ListItemButton} from "@mui/material";
+import React from 'react';
+import {Checkbox, List, ListItem, ListItemButton} from "@mui/material";
 import s from "../Todolist.module.css";
-import DeleteIcon from "@mui/icons-material/Delete";
-import {taskType} from "../Todolist";
 import {EditableTask} from "../EditableTask/EditableTask";
+import {taskType} from "../../App";
 
 
 type propsType = {
@@ -11,7 +10,7 @@ type propsType = {
     tasksForTodolist: Array<taskType>
     changeTaskStatus: (todolistID: string, id: string, value: boolean) => void
     updateTask: (todolistID: string, id: string, value: string) => void
-    onClickRemoveHandler: (id: string, value: MouseEvent<HTMLButtonElement>) => void
+    onClickRemoveHandler: (id: string) => void
 }
 export const TaskList = ({
                              tasksForTodolist,
@@ -33,12 +32,6 @@ export const TaskList = ({
                     >
                         <ListItem
                             onClick={() => changeTaskStatus(todolistID, item.id, !item.isDone)}
-                            secondaryAction={
-                                <IconButton edge="end" aria-label="delete"
-                                            onClick={(event) => onClickRemoveHandler(item.id, event)}>
-                                    <DeleteIcon/>
-                                </IconButton>
-                            }
                         >
                             <Checkbox
                                 checked={item.isDone}
@@ -47,6 +40,7 @@ export const TaskList = ({
                             <EditableTask
                                 updateTaskCallback={(title) => onClickUpdateTask(item.id, title)}
                                 title={item.taskTitle}
+                                onClickDeleteCallback={() => onClickRemoveHandler(item.id)}
                             />
                         </ListItem>
                     </ListItemButton>

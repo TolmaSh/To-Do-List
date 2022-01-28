@@ -10,7 +10,7 @@
 .todolist_add {
   background-color: #fff;
   padding: 20px;
-  width: 450px;
+  width: clamp(280px, 35%, 400px) ;
   border-radius: 15px;
 }
 .todolist_wrapper {

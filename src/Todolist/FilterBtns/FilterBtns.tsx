@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, Stack} from "@mui/material";
 import s from "../Todolist.module.css";
-import {filterType} from "../Todolist";
+import {filterType} from "../../App";
 
 
 type propsType = {

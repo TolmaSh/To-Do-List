@@ -39,7 +39,6 @@ export const AddItemForm = ({callBack, label}: propsType) => {
                 autoComplete="off"
                 className={s.inputWrapper}
                 onSubmit={(e: FormEvent<HTMLFormElement>) => e.preventDefault()}
-
             >
                 <TextField
                     error={error}
@@ -47,7 +46,6 @@ export const AddItemForm = ({callBack, label}: propsType) => {
                     variant="outlined"
                     value={title}
                     onChange={onChangeHandler} onKeyPress={onKeyPressHandler}
-
                 />
                 <Fab color="primary" aria-label="add" size="small" onClick={onClickHandler}>
                     <AddIcon/>
