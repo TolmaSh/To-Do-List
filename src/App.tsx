@@ -5,7 +5,6 @@ import {v1} from "uuid";
 import {AddItemForm} from "./Todolist/AddItemForm/AddItemForm";
 import {
     addTaskAC,
-    addTasksForNewTodolistAC,
     changeTaskStatusAC,
     removeTaskAC,
     TaskReducer,
@@ -79,9 +78,7 @@ function App() {
         todolistsDispatch(updateTodolistTitleAC(todolistID, newTitle))
     }
     const addTodolist = (newTitle: string) => {
-        const newID = v1();
-        todolistsDispatch(addTodolistAC(newID, newTitle))
-        tasksDispatch(addTasksForNewTodolistAC(newID))
+        todolistsDispatch(addTodolistAC(newTitle))
     }
     const filteredTasks = (todolistID: string, val: filterType) => {
         todolistsDispatch(filteredTasksAC(todolistID, val))

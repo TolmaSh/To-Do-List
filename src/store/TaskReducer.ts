@@ -1,16 +1,17 @@
 import {v1} from "uuid";
 import {taskType} from "../App";
+import {addTodolistActionType, deleteTodoActionType} from "./TodolistReducer";
 
-type TasksStateType = {
+export type TasksStateType = {
     [key: string]: taskType[]
 }
 
-export const TaskReducer = (state: TasksStateType, action: generalType) => {
+export const TaskReducer = (state: TasksStateType, action: generalType): TasksStateType => {
     switch (action.type) {
         case 'REMOVE-TASK': {
             return {
                 ...state,
-                [action.payload.todolistID]: state[action.payload.todolistID].filter((f: any) => f.id !== action.payload.id)
+                [action.payload.todolistID]: state[action.payload.todolistID].filter(f => f.id !== action.payload.id)
             }
         }
         case 'ADD-TASK': {
@@ -35,20 +36,27 @@ export const TaskReducer = (state: TasksStateType, action: generalType) => {
                 } : m)
             }
         }
-        case 'ADD-TASKS-FOR-NEW-TODOLIST': {
-            return {...state, [action.payload.newId]: [{id: v1(), taskTitle: "Write your todo", isDone: false}]}
+        case "ADD-TODOLIST": {
+            const newState = {...state}
+            newState[action.payload.newID] = [{id: action.payload.newID, taskTitle: "Write your todo", isDone: false}]
+            return newState
+        }
+        case "DELETE-TODO": {
+            const newState = {...state}
+            delete newState[action.payload.todolistID]
+            return state
         }
         default :
-            return state
+            throw new Error("I dont`t understand this action type")
     }
 }
-
 
 type generalType = removeTaskActionType
     | addTaskActionType
     | updateTaskActionType
     | changeTaskStatusActionType
-    | addTasksForNewTodolistAC
+    | addTodolistActionType
+    | deleteTodoActionType
 
 
 type removeTaskActionType = ReturnType<typeof removeTaskAC>
@@ -93,16 +101,6 @@ export const changeTaskStatusAC = (tID: string, id: string, checked: boolean) =>
             todolistID: tID,
             id: id,
             checked: checked
-        }
-    } as const
-}
-
-type addTasksForNewTodolistAC = ReturnType<typeof addTasksForNewTodolistAC>
-export const addTasksForNewTodolistAC = (newID: string) => {
-    return {
-        type: 'ADD-TASKS-FOR-NEW-TODOLIST',
-        payload: {
-            newId: newID
         }
     } as const
 }
