@@ -4,13 +4,15 @@ import {FilterBtns} from "./FilterBtns/FilterBtns";
 import {TaskList} from "./TaskList/TaskList";
 import {AddItemForm} from "./AddItemForm/AddItemForm";
 import {EditableTitle} from "./EditableTitle/EditableTitle";
-import {filterType, taskType} from "../App";
+import {filterType} from "../App";
+import {useSelector} from "react-redux";
+import {rootReducerType} from "../store/store";
+import {TasksStateType} from "../store/TaskReducer";
 
 
 type propsType = {
     todolistID: string
     title: string
-    task: Array<taskType>
     deleteTask: (todolistID: string, id: string) => void
     deleteTodo: (todolistID: string) => void
     addTask: (todolistID: string, newTitle: string) => void
@@ -23,7 +25,6 @@ type propsType = {
 
 export const Todolist = ({
                              title,
-                             task,
                              deleteTask,
                              addTask,
                              changeTaskStatus,
@@ -35,7 +36,7 @@ export const Todolist = ({
                              ...props
                          }: propsType) => {
 
-
+    const tasks = useSelector<rootReducerType, TasksStateType>(state => state.tasks)
     const addTaskCallBack = (title: string) => {
         addTask(todolistID, title)
     }
@@ -49,13 +50,13 @@ export const Todolist = ({
     let tasksForTodolist;
     switch (filter) {
         case "Active":
-            tasksForTodolist = task.filter(f => !f.isDone);
+            tasksForTodolist = tasks[todolistID].filter(f => !f.isDone);
             break
         case "Completed":
-            tasksForTodolist = task.filter(f => f.isDone);
+            tasksForTodolist = tasks[todolistID].filter(f => f.isDone);
             break
         default:
-            tasksForTodolist = task
+            tasksForTodolist = tasks[todolistID]
     }
 
     const onClickRemoveHandler = (id: string) => {

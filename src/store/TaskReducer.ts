@@ -1,12 +1,29 @@
 import {v1} from "uuid";
 import {taskType} from "../App";
-import {addTodolistActionType, deleteTodoActionType} from "./TodolistReducer";
+import {addTodolistActionType, deleteTodoActionType, todolistID_1, todolistID_2} from "./TodolistReducer";
+
 
 export type TasksStateType = {
     [key: string]: taskType[]
 }
+const initialState: TasksStateType = {
+    [todolistID_1]: [
+        {id: v1(), taskTitle: "HTML&CSS", isDone: true},
+        {id: v1(), taskTitle: "JS", isDone: false},
+        {id: v1(), taskTitle: "React", isDone: true},
+        {id: v1(), taskTitle: "Redux", isDone: false},
+        {id: v1(), taskTitle: "JSON", isDone: true}
+    ],
+    [todolistID_2]: [
+        {id: v1(), taskTitle: "Beer", isDone: true},
+        {id: v1(), taskTitle: "Milk", isDone: true},
+        {id: v1(), taskTitle: "Bread", isDone: true},
+        {id: v1(), taskTitle: "Salt", isDone: false},
+        {id: v1(), taskTitle: "Water", isDone: false}
+    ]
+}
 
-export const TaskReducer = (state: TasksStateType, action: generalType): TasksStateType => {
+export const TaskReducer = (state = initialState, action: generalType): TasksStateType => {
     switch (action.type) {
         case 'REMOVE-TASK': {
             return {
@@ -44,10 +61,11 @@ export const TaskReducer = (state: TasksStateType, action: generalType): TasksSt
         case "DELETE-TODO": {
             const newState = {...state}
             delete newState[action.payload.todolistID]
-            return state
+            console.log(newState)
+            return newState
         }
         default :
-            throw new Error("I dont`t understand this action type")
+            return state
     }
 }
 
