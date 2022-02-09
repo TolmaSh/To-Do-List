@@ -61,7 +61,6 @@ export const TaskReducer = (state = initialState, action: generalType): TasksSta
         case "DELETE-TODO": {
             const newState = {...state}
             delete newState[action.payload.todolistID]
-            console.log(newState)
             return newState
         }
         default :
