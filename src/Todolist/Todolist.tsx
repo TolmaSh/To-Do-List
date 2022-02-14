@@ -4,84 +4,61 @@ import {FilterBtns} from "./FilterBtns/FilterBtns";
 import {TaskList} from "./TaskList/TaskList";
 import {AddItemForm} from "./AddItemForm/AddItemForm";
 import {EditableTitle} from "./EditableTitle/EditableTitle";
-import {filterType} from "../App";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {rootReducerType} from "../store/store";
-import {TasksStateType} from "../store/TaskReducer";
+import {addTaskAC, removeTaskAC, taskType} from "../store/TaskReducer";
+import {deleteTodoAC, filteredTasksAC, filterType, TodoListType, updateTodolistTitleAC} from "../store/TodolistReducer";
 
 
 type propsType = {
     todolistID: string
-    title: string
-    deleteTask: (todolistID: string, id: string) => void
-    deleteTodo: (todolistID: string) => void
-    addTask: (todolistID: string, newTitle: string) => void
-    changeTaskStatus: (todolistID: string, id: string, value: boolean) => void
-    updateTask: (todolistID: string, id: string, value: string) => void
-    updateTitle: (todolistID: string, value: string) => void
-    filteredItems: (todolistID: string, val: filterType) => void
-    filter: filterType
 }
 
-export const Todolist = ({
-                             title,
-                             deleteTask,
-                             addTask,
-                             changeTaskStatus,
-                             updateTask,
-                             updateTitle,
-                             filter,
-                             todolistID,
-                             filteredItems,
-                             ...props
-                         }: propsType) => {
+export const Todolist = ({todolistID}: propsType) => {
 
-    const tasks = useSelector<rootReducerType, TasksStateType>(state => state.tasks)
-    const addTaskCallBack = (title: string) => {
-        addTask(todolistID, title)
+    const dispatch = useDispatch()
+    let tasks = useSelector<rootReducerType, taskType[]>(state => state.tasks[todolistID])
+    const todolist = useSelector<rootReducerType, TodoListType>(state => state.todolist
+        .filter(todo => todo.id === todolistID)[0])
+
+    if (todolist.filter === 'Active') {
+        tasks = tasks.filter(task => !task.isDone);
+    } else if (todolist.filter === 'Completed') {
+        tasks = tasks.filter(f => f.isDone);
     }
-    const filterHandler = (value: filterType) => {
-        filteredItems(todolistID, value)
+
+
+    const addTaskCallBack = (title: string) => {
+        dispatch(addTaskAC(todolistID, title))
+    }
+    const onClickFilteredTask = (value: filterType) => {
+        dispatch(filteredTasksAC(todolistID, value))
     }
     const updateTitleCallback = (title: string) => {
-        updateTitle(todolistID, title)
-    }
-
-    let tasksForTodolist;
-    switch (filter) {
-        case "Active":
-            tasksForTodolist = tasks[todolistID].filter(f => !f.isDone);
-            break
-        case "Completed":
-            tasksForTodolist = tasks[todolistID].filter(f => f.isDone);
-            break
-        default:
-            tasksForTodolist = tasks[todolistID]
+        dispatch(updateTodolistTitleAC(todolistID, title))
     }
 
     const onClickRemoveHandler = (id: string) => {
-        deleteTask(todolistID, id)
+        dispatch(removeTaskAC(todolistID, id))
     }
     const onClickDeleteTodoHandler = () => {
-        props.deleteTodo(todolistID)
+        dispatch(deleteTodoAC(todolistID))
     }
 
     return (
         <div className={s.wrapper}>
-            <EditableTitle deleteTaskCallBack={onClickDeleteTodoHandler} title={title}
+            <EditableTitle deleteTaskCallBack={onClickDeleteTodoHandler} title={todolist.title}
                            updateTitleCallback={updateTitleCallback}/>
             <AddItemForm
                 callBack={(title) => addTaskCallBack(title)}
             />
             <TaskList
                 todolistID={todolistID}
-                tasksForTodolist={tasksForTodolist}
-                changeTaskStatus={changeTaskStatus}
-                updateTask={updateTask}
+                tasksForTodolist={tasks}
                 onClickRemoveHandler={onClickRemoveHandler}
             />
-            <FilterBtns filterVal={filter}
-                        filterHandler={filterHandler}
+            <FilterBtns filterVal={todolist.filter}
+                        filterHandler={onClickFilteredTask}
             />
         </div>
     );

@@ -2,26 +2,27 @@ import React from 'react';
 import {Checkbox, List, ListItem, ListItemButton} from "@mui/material";
 import s from "../Todolist.module.css";
 import {EditableTask} from "../EditableTask/EditableTask";
-import {taskType} from "../../App";
+import {useDispatch} from "react-redux";
+import {changeTaskStatusAC, taskType, updateTaskAC} from "../../store/TaskReducer";
 
 
 type propsType = {
     todolistID: string
     tasksForTodolist: Array<taskType>
-    changeTaskStatus: (todolistID: string, id: string, value: boolean) => void
-    updateTask: (todolistID: string, id: string, value: string) => void
     onClickRemoveHandler: (id: string) => void
 }
 export const TaskList = ({
                              tasksForTodolist,
-                             changeTaskStatus,
                              onClickRemoveHandler,
                              todolistID,
-                             updateTask
                          }: propsType) => {
 
+    const dispatch = useDispatch()
     const onClickUpdateTask = (id: string, value: string) => {
-        updateTask(todolistID, id, value)
+        dispatch(updateTaskAC(todolistID, id, value))
+    }
+    const onClickChangeTaskStatus = (id: string, isDone: boolean) => {
+        dispatch(changeTaskStatusAC(todolistID,id,isDone))
     }
 
     return (
@@ -31,7 +32,7 @@ export const TaskList = ({
                     <ListItemButton className={s.list_item} key={item.id}
                     >
                         <ListItem
-                            onClick={() => changeTaskStatus(todolistID, item.id, !item.isDone)}
+                            onClick={() => onClickChangeTaskStatus(item.id, !item.isDone)}
                         >
                             <Checkbox
                                 checked={item.isDone}

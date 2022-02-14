@@ -1,8 +1,14 @@
-import {filterType, TodoListType} from "../App";
 import {v1} from "uuid";
 
 export const todolistID_1 = v1()
 export const todolistID_2 = v1()
+
+export type filterType = "All" | "Active" | "Completed"
+export type TodoListType = {
+    id: string
+    title: string
+    filter: filterType
+}
 
 const initialState: TodoListType[] = [
     {id: todolistID_1, title: 'What to learn', filter: "All"},
