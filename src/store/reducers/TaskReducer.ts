@@ -1,4 +1,5 @@
 import {v1} from "uuid";
+import {addTask, changeTaskStatus, removeTask, updateTask} from "../actions";
 import {addTodolistActionType, deleteTodoActionType, todolistID_1, todolistID_2} from "./TodolistReducer";
 
 
@@ -80,48 +81,7 @@ type generalType = removeTaskActionType
     | deleteTodoActionType
 
 
-type removeTaskActionType = ReturnType<typeof removeTaskAC>
-export const removeTaskAC = (tID: string, id: string) => {
-    return {
-        type: 'REMOVE-TASK',
-        payload: {
-            todolistID: tID,
-            id: id
-        }
-    } as const
-}
-
-type addTaskActionType = ReturnType<typeof addTaskAC>
-export const addTaskAC = (tID: string, newTitle: string) => {
-    return {
-        type: 'ADD-TASK',
-        payload: {
-            todolistID: tID,
-            newTitle: newTitle
-        }
-    } as const
-}
-
-type updateTaskActionType = ReturnType<typeof updateTaskAC>
-export const updateTaskAC = (tID: string, id: string, newTitle: string) => {
-    return {
-        type: 'UPDATE-TASK',
-        payload: {
-            todolistID: tID,
-            id: id,
-            newTitle: newTitle
-        }
-    } as const
-}
-
-type changeTaskStatusActionType = ReturnType<typeof changeTaskStatusAC>
-export const changeTaskStatusAC = (tID: string, id: string, checked: boolean) => {
-    return {
-        type: 'CHANGE-TASK-STATUS',
-        payload: {
-            todolistID: tID,
-            id: id,
-            checked: checked
-        }
-    } as const
-}
+type removeTaskActionType = ReturnType<typeof removeTask>
+type addTaskActionType = ReturnType<typeof addTask>
+type updateTaskActionType = ReturnType<typeof updateTask>
+type changeTaskStatusActionType = ReturnType<typeof changeTaskStatus>

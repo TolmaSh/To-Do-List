@@ -5,9 +5,10 @@ import {TaskList} from "./TaskList/TaskList";
 import {AddItemForm} from "./AddItemForm/AddItemForm";
 import {EditableTitle} from "./EditableTitle/EditableTitle";
 import {useDispatch, useSelector} from "react-redux";
-import {rootReducerType} from "../store/store";
-import {addTaskAC, removeTaskAC, taskType} from "../store/TaskReducer";
-import {deleteTodoAC, filteredTasksAC, filterType, TodoListType, updateTodolistTitleAC} from "../store/TodolistReducer";
+import {rootReducerType} from "../../store";
+import {taskType} from "../../store/reducers/TaskReducer";
+import {filterType, TodoListType} from "../../store/reducers/TodolistReducer";
+import {addTask, deleteTodo, filteredTasks, removeTask, updateTodolistTitle} from "../../store/actions";
 
 
 type propsType = {
@@ -29,33 +30,32 @@ export const Todolist = ({todolistID}: propsType) => {
 
 
     const addTaskCallBack = (title: string) => {
-        dispatch(addTaskAC(todolistID, title))
+        dispatch(addTask(todolistID, title))
     }
     const onClickFilteredTask = (value: filterType) => {
-        dispatch(filteredTasksAC(todolistID, value))
+        dispatch(filteredTasks(todolistID, value))
     }
-    const updateTitleCallback = (title: string) => {
-        dispatch(updateTodolistTitleAC(todolistID, title))
+    const updateTodolistTitleCallback = (title: string) => {
+        dispatch(updateTodolistTitle(todolistID, title))
     }
-
-    const onClickRemoveHandler = (id: string) => {
-        dispatch(removeTaskAC(todolistID, id))
+    const onClickRemoveTaskHandler = (id: string) => {
+        dispatch(removeTask(todolistID, id))
     }
     const onClickDeleteTodoHandler = () => {
-        dispatch(deleteTodoAC(todolistID))
+        dispatch(deleteTodo(todolistID))
     }
 
     return (
         <div className={s.wrapper}>
             <EditableTitle deleteTaskCallBack={onClickDeleteTodoHandler} title={todolist.title}
-                           updateTitleCallback={updateTitleCallback}/>
+                           updateTitleCallback={updateTodolistTitleCallback}/>
             <AddItemForm
                 callBack={(title) => addTaskCallBack(title)}
             />
             <TaskList
                 todolistID={todolistID}
                 tasksForTodolist={tasks}
-                onClickRemoveHandler={onClickRemoveHandler}
+                onClickRemoveHandler={onClickRemoveTaskHandler}
             />
             <FilterBtns filterVal={todolist.filter}
                         filterHandler={onClickFilteredTask}

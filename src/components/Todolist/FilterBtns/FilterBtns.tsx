@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, Stack} from "@mui/material";
 import s from "../Todolist.module.css";
-import {filterType} from "../../store/TodolistReducer";
+import {filterType} from "../../../store/reducers/TodolistReducer";
 
 
 type propsType = {

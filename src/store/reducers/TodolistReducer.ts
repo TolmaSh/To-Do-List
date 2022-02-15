@@ -1,7 +1,6 @@
 import {v1} from "uuid";
+import {addTodolist, deleteTodo, filteredTasks, updateTodolistTitle} from "../actions";
 
-export const todolistID_1 = v1()
-export const todolistID_2 = v1()
 
 export type filterType = "All" | "Active" | "Completed"
 export type TodoListType = {
@@ -10,6 +9,8 @@ export type TodoListType = {
     filter: filterType
 }
 
+export const todolistID_1 = v1()
+export const todolistID_2 = v1()
 const initialState: TodoListType[] = [
     {id: todolistID_1, title: 'What to learn', filter: "All"},
     {id: todolistID_2, title: 'What to buy', filter: "Active"}
@@ -42,48 +43,7 @@ type generalType = deleteTodoActionType
     | filteredTasksActionType
 
 
-export type deleteTodoActionType = ReturnType<typeof deleteTodoAC>
-export const deleteTodoAC = (tID: string) => {
-    return {
-        type: 'DELETE-TODO',
-        payload: {
-            todolistID: tID
-        }
-
-    } as const
-}
-
-
-type updateTodolistTitleActionType = ReturnType<typeof updateTodolistTitleAC>
-export const updateTodolistTitleAC = (tID: string, newTitle: string) => {
-    return {
-        type: 'UPDATE-TODOLIST-TITLE',
-        payload: {
-            todolistID: tID,
-            newTitle: newTitle,
-        }
-    } as const
-}
-
-export type addTodolistActionType = ReturnType<typeof addTodolistAC>
-export const addTodolistAC = ( newTitle: string) => {
-    return {
-        type: 'ADD-TODOLIST',
-        payload: {
-            newID: v1(),
-            newTitle: newTitle
-        }
-    } as const
-}
-
-
-type filteredTasksActionType = ReturnType<typeof filteredTasksAC>
-export const filteredTasksAC = (tID: string, val: filterType) => {
-    return {
-        type: 'FILTERED-TASKS',
-        payload: {
-            todolistID: tID,
-            value: val
-        }
-    } as const
-}
+export type deleteTodoActionType = ReturnType<typeof deleteTodo>
+type updateTodolistTitleActionType = ReturnType<typeof updateTodolistTitle>
+export type addTodolistActionType = ReturnType<typeof addTodolist>
+type filteredTasksActionType = ReturnType<typeof filteredTasks>

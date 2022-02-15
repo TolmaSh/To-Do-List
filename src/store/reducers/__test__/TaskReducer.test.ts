@@ -1,5 +1,5 @@
-import {addTaskAC, changeTaskStatusAC, removeTaskAC, TaskReducer, TasksStateType, updateTaskAC} from "./TaskReducer";
-import {addTodolistAC, deleteTodoAC} from "./TodolistReducer";
+import {TaskReducer, TasksStateType} from "../TaskReducer";
+import {addTask, addTodolist, changeTaskStatus, deleteTodo, removeTask, updateTask} from "../../actions";
 
 let startState: TasksStateType;
 
@@ -21,7 +21,7 @@ beforeEach(() => {
 test('correct task should be deleted from correct array', () => {
 
 
-    const action = removeTaskAC("todolistId2", "2");
+    const action = removeTask("todolistId2", "2");
 
     const endState = TaskReducer(startState, action)
 
@@ -44,7 +44,7 @@ test('correct task should be deleted from correct array', () => {
 test('correct task should be added to correct array', () => {
 
 
-    const action = addTaskAC("todolistId2", "juce");
+    const action = addTask("todolistId2", "juce");
 
     const endState = TaskReducer(startState, action)
 
@@ -57,7 +57,7 @@ test('correct task should be added to correct array', () => {
 
 test('status of specified task should be changed', () => {
 
-    const action = changeTaskStatusAC("todolistId2", "2", false);
+    const action = changeTaskStatus("todolistId2", "2", false);
 
     const endState = TaskReducer(startState, action)
 
@@ -67,7 +67,7 @@ test('status of specified task should be changed', () => {
 
 test('title of task should be changed', () => {
 
-    const action = updateTaskAC("todolistId2", "2", "beer");
+    const action = updateTask("todolistId2", "2", "beer");
 
     const endState = TaskReducer(startState, action)
 
@@ -79,7 +79,7 @@ test('title of task should be changed', () => {
 test('new array should be added when new todolist is added', () => {
 
 
-    const action = addTodolistAC("new todolist");
+    const action = addTodolist("new todolist");
 
     const endState = TaskReducer(startState, action)
 
@@ -97,7 +97,7 @@ test('new array should be added when new todolist is added', () => {
 
 test('property with todolistId should be deleted', () => {
 
-    const action = deleteTodoAC("todolistId2");
+    const action = deleteTodo("todolistId2");
 
     const endState = TaskReducer(startState, action)
 
