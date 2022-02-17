@@ -12,7 +12,6 @@ type propsType = {
 export const AddItemForm = ({callBack, label}: propsType) => {
     const [title, setTitle] = useState('')
     const [error, setError] = useState(false)
-
     const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => { /// error меняется  при change
         setTitle(event.currentTarget.value);
         setError(false)

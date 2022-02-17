@@ -5,7 +5,7 @@ import {TaskList} from "./TaskList/TaskList";
 import {AddItemForm} from "./AddItemForm/AddItemForm";
 import {EditableTitle} from "./EditableTitle/EditableTitle";
 import {useDispatch, useSelector} from "react-redux";
-import {rootReducerType} from "../../store";
+import {rootReducerType} from "../../store/store";
 import {taskType} from "../../store/reducers/TaskReducer";
 import {filterType, TodoListType} from "../../store/reducers/TodolistReducer";
 import {addTask, deleteTodo, filteredTasks, removeTask, updateTodolistTitle} from "../../store/actions";
