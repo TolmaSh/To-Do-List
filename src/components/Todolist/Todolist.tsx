@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useCallback} from "react";
 import s from "./Todolist.module.css";
 import {FilterBtns} from "./FilterBtns/FilterBtns";
 import {TaskList} from "./TaskList/TaskList";
@@ -29,9 +29,9 @@ export const Todolist = ({todolistID}: propsType) => {
     }
 
 
-    const addTaskCallBack = (title: string) => {
+    const addTaskCallBack = useCallback((title: string) => {
         dispatch(addTask(todolistID, title))
-    }
+    }, [dispatch]);
     const onClickFilteredTask = (value: filterType) => {
         dispatch(filteredTasks(todolistID, value))
     }

@@ -9,7 +9,7 @@ type propsType = {
     label?: string
 }
 
-export const AddItemForm = ({callBack, label}: propsType) => {
+export const AddItemForm = React.memo(({callBack, label}: propsType) => {
     const [title, setTitle] = useState('')
     const [error, setError] = useState(false)
     const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => { /// error меняется  при change
@@ -53,4 +53,4 @@ export const AddItemForm = ({callBack, label}: propsType) => {
             {error && <Alert className={s.alert} severity="error">Write a correct name</Alert>}
         </>
     );
-};
+});

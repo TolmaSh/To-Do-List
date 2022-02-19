@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import './App.css';
 import {Todolist} from "./components/Todolist/Todolist";
 import {AddItemForm} from "./components/Todolist/AddItemForm/AddItemForm";
@@ -8,14 +8,12 @@ import {addTodolist} from "./store/actions";
 
 
 function App() {
-
     const dispatch = useDispatch()
     const todolists = useSelector(selectTodolists)
-
-
-    const addTodolistCallBack = (newTitle: string) => {
+    const addTodolistCallBack = useCallback((newTitle: string) => {
         dispatch(addTodolist(newTitle))
-    }
+    }, [dispatch])
+    const mappedTodolists = todolists.map(t => <Todolist key={t.id} todolistID={t.id} />)
 
     return (
         <div className="App">
@@ -23,14 +21,7 @@ function App() {
                 <AddItemForm callBack={addTodolistCallBack} label={'Add your new todoList'}/>
             </div>
             <div className="todolist_wrapper">
-                {todolists.map(t => {
-                    return (
-                        <Todolist
-                            key={t.id}
-                            todolistID={t.id}
-                        />
-                    )
-                })}
+                {mappedTodolists}
             </div>
         </div>
     );
