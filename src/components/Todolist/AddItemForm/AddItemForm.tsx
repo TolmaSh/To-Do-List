@@ -10,6 +10,7 @@ type propsType = {
 }
 
 export const AddItemForm = React.memo(({callBack, label}: propsType) => {
+    console.log('AddItemForm')
     const [title, setTitle] = useState('')
     const [error, setError] = useState(false)
     const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => { /// error меняется  при change

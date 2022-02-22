@@ -11,7 +11,7 @@ type propsType = {
     deleteTaskCallBack: () => void
     updateTitleCallback: (title: string) => void
 }
-export const EditableTitle: React.FC<propsType> = ({title, deleteTaskCallBack, updateTitleCallback}) => {
+export const EditableTitle: React.FC<propsType> = React.memo(({title, deleteTaskCallBack, updateTitleCallback}) => {
     const [edit, setEdit] = useState(false)
     const [newTitle, setNewTitle] = useState(title)
 
@@ -54,4 +54,4 @@ export const EditableTitle: React.FC<propsType> = ({title, deleteTaskCallBack, u
             </IconButton>
         </h3>
     );
-};
+});

@@ -8,7 +8,7 @@ type propsType = {
     filterVal: filterType
     filterHandler: (value: filterType) => void
 }
-export const FilterBtns = ({filterVal, filterHandler}: propsType) => {
+export const FilterBtns = React.memo(({filterVal, filterHandler}: propsType) => {
     return (
         <Stack className={s.buttons} spacing={2} direction="row">
             <Button variant={filterVal === 'All' ? "contained" : "outlined"} size='small'
@@ -20,4 +20,4 @@ export const FilterBtns = ({filterVal, filterHandler}: propsType) => {
                     onClick={() => filterHandler("Completed")}>Completed</Button>
         </Stack>
     );
-};
+});

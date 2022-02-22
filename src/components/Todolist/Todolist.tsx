@@ -15,8 +15,8 @@ type propsType = {
     todolistID: string
 }
 
-export const Todolist = ({todolistID}: propsType) => {
-
+export const Todolist = React.memo(({todolistID}: propsType) => {
+    console.log('Todolist')
     const dispatch = useDispatch()
     let tasks = useSelector<rootReducerType, taskType[]>(state => state.tasks[todolistID])
     const todolist = useSelector<rootReducerType, TodoListType>(state => state.todolist
@@ -31,19 +31,19 @@ export const Todolist = ({todolistID}: propsType) => {
 
     const addTaskCallBack = useCallback((title: string) => {
         dispatch(addTask(todolistID, title))
-    }, [dispatch]);
-    const onClickFilteredTask = (value: filterType) => {
+    }, [dispatch, todolistID]);
+    const onClickFilteredTask = useCallback((value: filterType) => {
         dispatch(filteredTasks(todolistID, value))
-    }
-    const updateTodolistTitleCallback = (title: string) => {
+    }, [dispatch, todolistID])
+    const updateTodolistTitleCallback = useCallback((title: string) => {
         dispatch(updateTodolistTitle(todolistID, title))
-    }
-    const onClickRemoveTaskHandler = (id: string) => {
+    }, [dispatch, todolistID])
+    const onClickRemoveTaskHandler = useCallback((id: string) => {
         dispatch(removeTask(todolistID, id))
-    }
-    const onClickDeleteTodoHandler = () => {
+    }, [dispatch, todolistID])
+    const onClickDeleteTodoHandler = useCallback(() => {
         dispatch(deleteTodo(todolistID))
-    }
+    }, [dispatch, todolistID])
 
     return (
         <div className={s.wrapper}>
@@ -62,4 +62,4 @@ export const Todolist = ({todolistID}: propsType) => {
             />
         </div>
     );
-}
+});

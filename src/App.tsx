@@ -13,8 +13,8 @@ function App() {
     const addTodolistCallBack = useCallback((newTitle: string) => {
         dispatch(addTodolist(newTitle))
     }, [dispatch])
-    const mappedTodolists = todolists.map(t => <Todolist key={t.id} todolistID={t.id} />)
-
+    const mappedTodolists = todolists.map(t => <Todolist key={t.id} todolistID={t.id}/>)
+    console.log('App')
     return (
         <div className="App">
             <div className="todolist_add">
