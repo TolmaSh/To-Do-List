@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FC, memo} from 'react';
 import {Button, Stack} from "@mui/material";
 import s from "../Todolist.module.css";
 import {filterType} from "../../../store/reducers/TodolistReducer";
@@ -8,7 +8,8 @@ type propsType = {
     filterVal: filterType
     filterHandler: (value: filterType) => void
 }
-export const FilterBtns = React.memo(({filterVal, filterHandler}: propsType) => {
+export const FilterBtns: FC<propsType> = memo(({filterVal, filterHandler}) => {
+    console.log('Filtered btns')
     return (
         <Stack className={s.buttons} spacing={2} direction="row">
             <Button variant={filterVal === 'All' ? "contained" : "outlined"} size='small'

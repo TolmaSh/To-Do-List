@@ -1,20 +1,30 @@
-import React from 'react';
+import React, {FC, memo} from 'react';
 import {List} from "@mui/material";
 import s from "../Todolist.module.css";
 import {taskType} from "../../../store/reducers/TaskReducer";
 import {Task} from "./Task";
+import {useSelector} from "react-redux";
+import {rootReducerType} from "../../../store/store";
+import {TodoListType} from "../../../store/reducers/TodolistReducer";
 
 
 type propsType = {
     todolistID: string
-    tasksForTodolist: Array<taskType>
-    onClickRemoveHandler: (id: string) => void
+    todolist: TodoListType
 };
 
-export const TaskList = React.memo(({tasksForTodolist, todolistID,}: propsType) => {
+export const TaskList: FC<propsType> = memo(({todolist, todolistID,}) => {
 
     console.log('TaskList')
-    const mappedTasks = tasksForTodolist.map((task: taskType) => (
+
+    let tasks = useSelector<rootReducerType, taskType[]>(state => state.tasks[todolistID])
+    if (todolist.filter === 'Active') {
+        tasks = tasks.filter(task => !task.isDone);
+    } else if (todolist.filter === 'Completed') {
+        tasks = tasks.filter(f => f.isDone);
+    }
+
+    const mappedTasks = tasks.map((task: taskType) => (
         <Task
             key={task.id}
             todolistID={todolistID}
@@ -26,6 +36,5 @@ export const TaskList = React.memo(({tasksForTodolist, todolistID,}: propsType) 
         <List className={s.list}>
             {mappedTasks}
         </List>
-
     );
 });

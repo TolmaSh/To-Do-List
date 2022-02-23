@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FormEvent, KeyboardEvent, useState} from 'react';
+import React, {ChangeEvent, FC, FormEvent, KeyboardEvent, memo, useState} from 'react';
 import {Alert, Box, Fab} from "@mui/material";
 import s from "../Todolist.module.css";
 import TextField from "@mui/material/TextField";
@@ -9,7 +9,7 @@ type propsType = {
     label?: string
 }
 
-export const AddItemForm = React.memo(({callBack, label}: propsType) => {
+export const AddItemForm: FC<propsType> = memo(({callBack, label}) => {
     console.log('AddItemForm')
     const [title, setTitle] = useState('')
     const [error, setError] = useState(false)

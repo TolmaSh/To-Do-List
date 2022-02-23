@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FC, memo} from 'react';
 import {taskType} from "../../../store/reducers/TaskReducer";
 import {Checkbox, ListItem, ListItemButton} from "@mui/material";
 import s from "../Todolist.module.css";
@@ -11,16 +11,18 @@ type propsType = {
     todolistID: string
 }
 
-export const Task: React.FC<propsType> = React.memo(({task, todolistID}) => {
+export const Task: FC<propsType> = memo(({task, todolistID}) => {
     console.log('Task')
     const dispatch = useDispatch()
 
     const onClickUpdateTask = () => {
         dispatch(updateTask(todolistID, task.id, task.taskTitle))
     }
+
     const onClickChangeTaskStatus = () => {
         dispatch(changeTaskStatus(todolistID, task.id, !task.isDone))
     } // Логика редюсера( смена isDone здесь или в редюсере? )
+
     const onClickRemoveTask = () => {
         dispatch(removeTask(todolistID, task.id))
     }
