@@ -54,7 +54,7 @@ export const TaskReducer = (state = initialState, action: generalType): TasksSta
                 ...state,
                 [action.payload.todolistID]: state[action.payload.todolistID].map(m => m.id === action.payload.id ? {
                     ...m,
-                    isDone: action.payload.checked
+                    isDone: !action.payload.checked
                 } : m)
             }
         }

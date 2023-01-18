@@ -21,7 +21,7 @@ export const TaskList: FC<propsType> = memo(({todolist, todolistID,}) => {
     if (todolist.filter === 'Active') {
         tasks = tasks.filter(task => !task.isDone);
     } else if (todolist.filter === 'Completed') {
-        tasks = tasks.filter(f => f.isDone);
+        tasks = tasks.filter(task => task.isDone);
     }
 
     const mappedTasks = tasks.map((task: taskType) => (

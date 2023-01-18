@@ -20,8 +20,8 @@ export const Task: FC<propsType> = memo(({task, todolistID}) => {
     }
 
     const onClickChangeTaskStatus = () => {
-        dispatch(changeTaskStatus(todolistID, task.id, !task.isDone))
-    } // Логика редюсера( смена isDone здесь или в редюсере? )
+        dispatch(changeTaskStatus(todolistID, task.id, task.isDone))
+    }
 
     const onClickRemoveTask = () => {
         dispatch(removeTask(todolistID, task.id))

@@ -33,6 +33,7 @@ export const Todolist: FC<propsType> = memo(({todolistID}) => {
         dispatch(updateTodolistTitle(todolistID, title))
     }, [dispatch, todolistID])
 
+
     const onClickDeleteTodoHandler = useCallback(() => {
         dispatch(deleteTodo(todolistID))
     }, [dispatch, todolistID])
