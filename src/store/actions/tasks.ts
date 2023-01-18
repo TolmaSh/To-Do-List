@@ -1,41 +1,41 @@
-export const removeTask = (tID: string, id: string) => {
+export const removeTask = (todolistID: string, id: string) => {
     return {
         type: 'REMOVE-TASK',
         payload: {
-            todolistID: tID,
-            id: id
+            todolistID,
+            id,
         }
     } as const
 }
 
-export const addTask = (tID: string, newTitle: string) => {
+export const addTask = (todolistID: string, newTitle: string) => {
     return {
         type: 'ADD-TASK',
         payload: {
-            todolistID: tID,
-            newTitle: newTitle
+            todolistID,
+            newTitle,
         }
     } as const
 }
 
-export const updateTask = (tID: string, id: string, newTitle: string) => {
+export const updateTask = (todolistID: string, id: string, newTitle: string) => {
     return {
         type: 'UPDATE-TASK',
         payload: {
-            todolistID: tID,
-            id: id,
-            newTitle: newTitle
+            todolistID,
+            id,
+            newTitle,
         }
     } as const
 }
 
-export const changeTaskStatus = (tID: string, id: string, checked: boolean) => {
+export const changeTaskStatus = (todolistID: string, id: string, checked: boolean) => {
     return {
         type: 'CHANGE-TASK-STATUS',
         payload: {
-            todolistID: tID,
-            id: id,
-            checked: checked
+            todolistID,
+            id,
+            checked,
         }
     } as const
 }

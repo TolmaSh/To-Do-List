@@ -10,11 +10,11 @@ import {filterType, TodoListType} from "../../store/reducers/TodolistReducer";
 import {addTask, deleteTodo, filteredTasks, updateTodolistTitle} from "../../store/actions";
 
 
-type propsType = {
+type PropsType = {
     todolistID: string
 }
 
-export const Todolist: FC<propsType> = memo(({todolistID}) => {
+export const Todolist: FC<PropsType> = memo(({todolistID}) => {
     console.log('Todolist')
 
     const dispatch = useDispatch()

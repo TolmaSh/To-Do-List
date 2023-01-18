@@ -2,22 +2,22 @@ import {v1} from "uuid";
 import {filterType} from "../reducers/TodolistReducer";
 
 
-export const deleteTodo = (tID: string) => {
+export const deleteTodo = (todolistID: string) => {
     return {
         type: 'DELETE-TODO',
         payload: {
-            todolistID: tID
+            todolistID,
         }
 
     } as const
 }
 
-export const updateTodolistTitle = (tID: string, newTitle: string) => {
+export const updateTodolistTitle = (todolistID: string, newTitle: string) => {
     return {
         type: 'UPDATE-TODOLIST-TITLE',
         payload: {
-            todolistID: tID,
-            newTitle: newTitle,
+            todolistID,
+            newTitle,
         }
     } as const
 }
@@ -27,17 +27,17 @@ export const addTodolist = (newTitle: string) => {
         type: 'ADD-TODOLIST',
         payload: {
             newID: v1(),
-            newTitle: newTitle
+            newTitle,
         }
     } as const
 }
 
-export const filteredTasks = (tID: string, val: filterType) => {
+export const filteredTasks = (todolistID: string, value: filterType) => {
     return {
         type: 'FILTERED-TASKS',
         payload: {
-            todolistID: tID,
-            value: val
+            todolistID,
+            value,
         }
     } as const
 }
